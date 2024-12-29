@@ -12,6 +12,16 @@ const booksReduser = (state = initiatState, action) => {
         return book.id !== action.payload;
       });
 
+    case a.TOGGLE_FAVORITE:
+      return state.map((book) =>
+        book.id === action.payload
+          ? {
+              ...book,
+              isFavorite: !book.isFavorite,
+            }
+          : book
+      );
+
     default:
       return state;
   }

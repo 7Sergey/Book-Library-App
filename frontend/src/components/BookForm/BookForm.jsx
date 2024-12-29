@@ -20,6 +20,7 @@ const BookForm = () => {
     const randomBookWithId = {
       ...randomBook,
       id: uuidv4(),
+      isFavorite: false,
     };
     dispatch(addBook(randomBookWithId));
   };
@@ -31,6 +32,7 @@ const BookForm = () => {
         title: title,
         author: author,
         id: uuidv4(), // генерация id из uuid - генератор id
+        isFavorite: false,
       };
 
       dispatch(addBook(book)); // вызвав addBook мы получим объект с type и peyload. И этот объект передаем в dispatch
