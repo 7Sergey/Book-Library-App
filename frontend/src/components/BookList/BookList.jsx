@@ -3,12 +3,32 @@ import { deleteBook } from "../../redux/books/actionCreators";
 import "./BookList.css";
 
 const BookList = () => {
+  async function fetchBooks() {
+    try {
+      const response = await fetch(
+        "https://stephen-king-api.onrender.com/api/books"
+      );
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+      return await response.json();
+    } catch (error) {
+      console.error("Ошибка при получении списка книг:", error);
+    }
+  }
+
+  async function logBooks() {
+    const stivenBiikList = await fetchBooks();
+    stivenBiikList;
+  }
+
   const books = useSelector((state) => state.books);
   const dispatch = useDispatch();
 
   const handleDelete = (id) => {
     dispatch(deleteBook(id));
   };
+
   return (
     <div className="app-block book-list">
       <h2>Book List</h2>
