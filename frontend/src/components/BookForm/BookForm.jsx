@@ -18,7 +18,7 @@ const BookForm = () => {
       const book = {
         title: title,
         author: author,
-        id: uuidv4(), // генерация id из uuid
+        id: uuidv4(), // генерация id из uuid - генератор id
       };
 
       dispatch(addBook(book)); // вызвав addBook мы получим объект с type и peyload. И этот объект передаем в dispatch
