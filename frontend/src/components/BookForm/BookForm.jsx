@@ -1,5 +1,8 @@
+// внешние импорты
 import { useState } from "react";
 import { useDispatch } from "react-redux";
+import { v4 as uuidv4 } from "uuid";
+// локальные импорты
 import { addBook } from "../../redux/books/actionCreators";
 import "./BookForm.css";
 
@@ -15,6 +18,7 @@ const BookForm = () => {
       const book = {
         title: title,
         author: author,
+        id: uuidv4(), // генерация id из uuid
       };
 
       dispatch(addBook(book)); // вызвав addBook мы получим объект с type и peyload. И этот объект передаем в dispatch
