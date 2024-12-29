@@ -2,7 +2,7 @@ import * as a from './actionTypes';
 
 const initiatState = [];
 
-const booksReduser = (state = initiatState, action) => {
+const booksReducer = (state = initiatState, action) => {
   switch (action.type) {
     case a.ADD_BOOK:
       return [...state, action.payload];
@@ -27,4 +27,4 @@ const booksReduser = (state = initiatState, action) => {
   }
 };
 
-export default booksReduser;
+export default booksReducer;
