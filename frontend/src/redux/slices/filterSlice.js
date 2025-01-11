@@ -3,6 +3,7 @@ import { createSlice } from '@reduxjs/toolkit';
 const initialState = {
   title: '',
   author: '',
+  favorite: false,
 };
 
 const filterSlice = createSlice({
@@ -20,6 +21,13 @@ const filterSlice = createSlice({
         author: action.payload,
       };
     },
+    setFavoriteFilter: (state, action) => {
+      // Классический способ
+      return {
+        ...state,
+        favorite: action.payload,
+      };
+    },
     resetFilters: () => {
       //Можно просто вернуть начальное значение
       return initialState;
@@ -27,9 +35,15 @@ const filterSlice = createSlice({
   },
 });
 
-export const { setTitleFilter, setAuthorFilter, resetFilters } =
-  filterSlice.actions;
+export const {
+  setTitleFilter,
+  setAuthorFilter,
+  setFavoriteFilter,
+  resetFilters,
+} = filterSlice.actions;
 
 export const selectTitleFilter = (state) => state.filter.title;
 export const selectAuthorFilter = (state) => state.filter.author;
+export const selectFavoriteFilter = (state) => state.filter.favorite;
+
 export default filterSlice.reducer;
