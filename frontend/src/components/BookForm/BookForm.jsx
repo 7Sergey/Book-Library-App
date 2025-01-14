@@ -1,10 +1,9 @@
 // внешние импорты
 import { useState } from "react";
 import { useDispatch } from "react-redux";
-import axios from "axios";
 // локальные импорты
 import booksData from "../../data/books.json";
-import { addBook } from "../../redux/slices/booksSlice";
+import { addBook, thunkFunction } from "../../redux/slices/booksSlice";
 import "./BookForm.css";
 import createBookWithId from "../../utils/createBookWithId";
 
@@ -29,7 +28,7 @@ const BookForm = () => {
           title: title,
           author: author,
         },
-        "manual" //Истояник создания книги
+        "manual" //Источник создания книги
       ); //передаем в функцию объект с двумя свойствами
 
       dispatch(addBook(book)); // вызвав addBook мы получим объект с type и peyload. И этот объект передаем в dispatch
@@ -40,16 +39,7 @@ const BookForm = () => {
   };
 
   const handleAddRandomBookViaAPI = async () => {
-    try {
-      const url = "http://localhost:4000/random-book";
-      const res = await axios.get(url);
-
-      if (res?.data?.title && res?.data?.author) {
-        dispatch(addBook(createBookWithId(res.data, "API")));
-      }
-    } catch (error) {
-      console.log("Error fetching random book", error);
-    }
+    dispatch(thunkFunction);
   };
 
   return (
