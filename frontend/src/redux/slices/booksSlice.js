@@ -1,16 +1,29 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
 import createBookWithId from '../../utils/createBookWithId';
+import { setError } from './errorSlice';
 
 const initialState = [];
 // создаем асинхронную функцию -- гет запрос на сервер с action под названием books/fetchBook
-export const fetchBook = createAsyncThunk('books/fetchBook', async () => {
-  const url = 'http://localhost:4000/random-book';
-  const res = await axios.get(url);
-
-  // возвращаем данные с сервера
-  return res.data;
-});
+export const fetchBook = createAsyncThunk(
+  'books/fetchBook',
+  async (url, thunkAPI) => {
+    try {
+      const res = await axios.get(url);
+      // возвращаем данные с сервера
+      return res.data;
+    } catch (error) {
+      thunkAPI.dispatch(setError(error.message));
+      throw error; // всё равно нужно выкинуть ошибку дальше, чтобы промис был отклонен(rejected)
+      // thunkAPI - объект, передаваемый в асинхронные thunk-функции в Redux Toolkit.
+      // Он предоставляет доступ к вспомогательным методам, таким как dispatch, getState и rejectWithValue.
+      // Пример использования:
+      // - dispatch: позволяет отправлять другие действия из thunk.
+      // - getState: предоставляет доступ к текущему состоянию хранилища.
+      // - rejectWithValue: используется для возврата пользовательских ошибок при отклонении промиса.
+    }
+  }
+);
 
 const booksSlice = createSlice({
   name: 'books',
