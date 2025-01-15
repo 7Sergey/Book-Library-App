@@ -10,8 +10,7 @@ export const fetchBook = createAsyncThunk(
   async (url, thunkAPI) => {
     try {
       const res = await axios.get(url);
-      // возвращаем данные с сервера
-      return res.data;
+      return res.data; // возврат данных с сервера
     } catch (error) {
       thunkAPI.dispatch(setError(error.message));
       throw error; // всё равно нужно выкинуть ошибку дальше, чтобы промис был отклонен(rejected)
