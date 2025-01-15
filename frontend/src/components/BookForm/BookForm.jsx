@@ -1,10 +1,14 @@
 // внешние импорты
 import { useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { FaSpinner } from "react-icons/fa";
 // локальные импорты
 import booksData from "../../data/books.json";
-import { addBook, fetchBook } from "../../redux/slices/booksSlice";
+import {
+  addBook,
+  fetchBook,
+  selectIsLoadingViaAPI,
+} from "../../redux/slices/booksSlice";
 import "./BookForm.css";
 import createBookWithId from "../../utils/createBookWithId";
 import { setError } from "../../redux/slices/errorSlice";
@@ -12,9 +16,8 @@ import { setError } from "../../redux/slices/errorSlice";
 const BookForm = () => {
   const [title, setTitle] = useState("");
   const [author, setAuthor] = useState("");
+  const isLoadingViaAPI = useSelector(selectIsLoadingViaAPI);
   const dispatch = useDispatch();
-
-  const [isLoading, setIsLoading] = useState(false);
 
   const handleAddRandomBook = () => {
     const randomIndex = Math.floor(Math.random() * booksData.length);
@@ -46,17 +49,7 @@ const BookForm = () => {
   };
 
   const handleAddRandomBookViaAPI = async () => {
-    try {
-      //начинаем загрузку данных
-      setIsLoading(true);
-      // //эта функция возвращает промис,
-      //  потому что fetchBook -- результат вызова функции createAsyncThunk,
-      //  где мы создали асинхронную функцию
-      await dispatch(fetchBook("http://localhost:4000/random-book-delayed"));
-    } finally {
-      //независимо от результата, завершаем загрузку
-      setIsLoading(false);
-    }
+    dispatch(fetchBook("http://localhost:4000/random-book-delayed"));
   };
 
   return (
@@ -89,9 +82,9 @@ const BookForm = () => {
         <button
           type="button"
           onClick={handleAddRandomBookViaAPI}
-          disabled={isLoading} // отключаем кнопку, когда идет загрузка
+          disabled={isLoadingViaAPI} // отключаем кнопку, когда идет загрузка
         >
-          {isLoading ? (
+          {isLoadingViaAPI ? (
             <>
               <span>Loading Book...</span>
               <FaSpinner className="spinner" />

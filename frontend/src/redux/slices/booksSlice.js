@@ -2,8 +2,13 @@ import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
 import createBookWithId from '../../utils/createBookWithId';
 import { setError } from './errorSlice';
+import { act } from 'react';
 
-const initialState = [];
+const initialState = {
+  books: [],
+  isLoadingViaAPI: false,
+};
+
 // создаем асинхронную функцию -- гет запрос на сервер с action под названием books/fetchBook
 export const fetchBook = createAsyncThunk(
   'books/fetchBook',
@@ -13,7 +18,12 @@ export const fetchBook = createAsyncThunk(
       return res.data; // возврат данных с сервера
     } catch (error) {
       thunkAPI.dispatch(setError(error.message));
-      throw error; // всё равно нужно выкинуть ошибку дальше, чтобы промис был отклонен(rejected)
+      // 1 option, перенаправляем в reject(отклоняем промисс)
+      // return thunkAPI.rejectWithValue(error);
+      // 2 option
+      throw error;
+      // всё равно нужно выкинуть ошибку дальше, чтобы промис был отклонен(rejected)
+
       // thunkAPI - объект, передаваемый в асинхронные thunk-функции в Redux Toolkit.
       // Он предоставляет доступ к вспомогательным методам, таким как dispatch, getState и rejectWithValue.
       // Пример использования:
@@ -31,45 +41,61 @@ const booksSlice = createSlice({
     addBook: (state, action) => {
       // return [...state, action.payload];
       //А можно мутировать state, нам позволяет это сделать библиотека Immer, которая каждый раз пересоздает новый state
-      state.push(action.payload);
+      state.books.push(action.payload);
     },
     deleteBook: (state, action) => {
-      return state.filter((book) => {
-        return book.id !== action.payload;
-      });
+      return {
+        ...state,
+        books: state.books.filter((book) => book.id !== action.payload),
+      };
     },
 
-    // return state.map((book) =>
-    //   book.id === action.payload
-    //     ? {
-    //         ...book,
-    //         isFavorite: !book.isFavorite,
-    //       }
-    //     : book
-    // );
-
-    //а можно мутировать состояние книги (благодаря библиотеке Immer)
     toggleFavorite: (state, action) => {
-      state.forEach((book) => {
+      state.books.forEach((book) => {
         if (book.id === action.payload) {
           book.isFavorite = !book.isFavorite;
         }
       });
     },
   },
+  // 1 OPTION
+  // extraReducers: {
+  //   [fetchBook.pending]: (state) => {
+  //     state.isLoadingViaAPI = true;
+  //   },
+  //   [fetchBook.fulfilled]: (state, action) => {
+  //     state.isLoadingViaAPI = false;
+
+  //     if (action.payload.title && action.payload.author) {
+  //       // добавили в массив state новую книгу, которую создаем в createBookWithId
+  //       state.books.push(createBookWithId(action.payload, 'API'));
+  //     }
+  //   },
+  //   [fetchBook.rejected]: (state) => {
+  //     state.isLoadingViaAPI = false;
+  //   },
+  // },
+
+  // 2 OPTION
   extraReducers: (builder) => {
-    //Добавили кейс. Что делать, если получили fetchBook.fulfilled, то есть к нам вернулся успешный результат промиса
+    builder.addCase(fetchBook.pending, (state) => {
+      state.isLoadingViaAPI = true;
+    });
     builder.addCase(fetchBook.fulfilled, (state, action) => {
-      if (action.payload.title && action.payload.author) {
-        // добавили в массив state новую книгу, которую создаем в createBookWithId
-        state.push(createBookWithId(action.payload, 'API'));
+      state.isLoadingViaAPI = false;
+      if (action?.payload?.title && action?.payload?.author) {
+        state.books.push(createBookWithId(action.payload, 'API'));
       }
+    });
+    builder.addCase(fetchBook.rejected, (state) => {
+      state.isLoadingViaAPI = false;
     });
   },
 });
 
 export const { addBook, deleteBook, toggleFavorite } = booksSlice.actions;
 
-export const selectBooks = (state) => state.books;
+export const selectBooks = (state) => state.books.books;
+export const selectIsLoadingViaAPI = (state) => state.books.isLoadingViaAPI;
 
 export default booksSlice.reducer;
