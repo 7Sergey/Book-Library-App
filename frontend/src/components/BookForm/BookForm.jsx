@@ -6,6 +6,7 @@ import booksData from "../../data/books.json";
 import { addBook, fetchBook } from "../../redux/slices/booksSlice";
 import "./BookForm.css";
 import createBookWithId from "../../utils/createBookWithId";
+import { setError } from "../../redux/slices/errorSlice";
 
 const BookForm = () => {
   const [title, setTitle] = useState("");
@@ -25,16 +26,19 @@ const BookForm = () => {
     if (title && author) {
       const book = createBookWithId(
         {
+          //передаем в функцию объект с двумя свойствами
           title: title,
           author: author,
         },
         "manual" //Источник создания книги
-      ); //передаем в функцию объект с двумя свойствами
+      );
 
       dispatch(addBook(book)); // вызвав addBook мы получим объект с type и peyload. И этот объект передаем в dispatch
 
       setAuthor("");
       setTitle("");
+    } else {
+      dispatch(setError("Проверьте поля ввода"));
     }
   };
 
