@@ -12,7 +12,7 @@ import {
   selectFavoriteFilter,
   selectTitleFilter,
 } from "../../redux/slices/filterSlice";
-import "./BookList.css";
+import "./BookList.scss";
 
 const BookList = () => {
   const dispatch = useDispatch();

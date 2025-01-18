@@ -1,23 +1,22 @@
 .book-form {
-    width: 100%;
-}
+  width: 100%;
 
-.book-form label {
+  label {
     display: block;
     width: 100%;
     text-align: center;
     margin-bottom: 10px;
-}
+  }
 
-.book-form input {
+  input {
     width: 80%;
     padding: 8px;
     margin-bottom: 10px;
     border: 1px solid #ccc;
     border-radius: 3px;
-}
+  }
 
-.book-form button {
+  button {
     background-color: #007bff;
     color: #fff;
     padding: 8px 12px;
@@ -26,23 +25,24 @@
     cursor: pointer;
     margin: 10px;
     transition: background-color 0.3s ease;
-}
 
-.book-form button:hover {
-    background-color: #0056b3;
-}
+    &:hover {
+      background-color: #0056b3;
+    }
+  }
 
-.book-form .spinner {
+  .spinner {
     animation: spinner 1s infinite linear;
     margin-left: 10px;
+  }
 }
 
 @keyframes spinner {
-    from {
-        transform: rotate(0deg);
-    }
+  from {
+    transform: rotate(0deg);
+  }
 
-    to {
-        transform: rotate(360deg);
-    }
+  to {
+    transform: rotate(360deg);
+  }
 }

@@ -2,7 +2,6 @@ import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
 import createBookWithId from '../../utils/createBookWithId';
 import { setError } from './errorSlice';
-import { act } from 'react';
 
 const initialState = {
   books: [],

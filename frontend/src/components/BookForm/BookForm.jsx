@@ -9,7 +9,7 @@ import {
   fetchBook,
   selectIsLoadingViaAPI,
 } from "../../redux/slices/booksSlice";
-import "./BookForm.css";
+import "./BookForm.scss";
 import createBookWithId from "../../utils/createBookWithId";
 import { setError } from "../../redux/slices/errorSlice";
 

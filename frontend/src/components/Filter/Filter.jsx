@@ -8,7 +8,7 @@ import {
   selectFavoriteFilter,
   setFavoriteFilter,
 } from "../../redux/slices/filterSlice";
-import "./Filter.css";
+import "./Filter.scss";
 
 const Filter = () => {
   const dispatch = useDispatch();
