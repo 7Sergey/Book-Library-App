@@ -1,25 +1,21 @@
+import { Route, Routes } from "react-router-dom";
 import "./App.css";
-import BookForm from "./components/BookForm/BookForm";
-import BookList from "./components/BookList/BookList";
-import Error from "./components/Error/Error";
-import Filter from "./components/Filter/Filter";
+import MainLayout from "./layouts/MainLayout";
+import Library from "./components/Library/Library";
+import NotFound from "./components/NotFound.jsx/NotFound";
+import Profile from "./components/Profile/Profile";
 
 function App() {
   return (
     <div className="app">
-      <header className="app-header">
-        <h1>Book Library App</h1>
-      </header>
-      <main className="app-main">
-        <div className="app-left-column">
-          <BookForm />
-        </div>
-        <div className="app-right-column">
-          <Filter />
-          <BookList />
-        </div>
-      </main>
-      <Error />
+      <Routes>
+        <Route path="/" element={<MainLayout />}>
+          <Route index element={<Library />} />
+          <Route path="profile" element={<Profile />} />
+
+          <Route path="*" element={<NotFound />} />
+        </Route>
+      </Routes>
     </div>
   );
 }

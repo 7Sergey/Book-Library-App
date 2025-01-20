@@ -1,0 +1,16 @@
+a {
+  color: lightblue;
+  font-style: 35px;
+}
+
+nav {
+  padding: 5px;
+  a {
+    margin: 15px;
+  }
+}
+
+.active {
+  color: lightyellow;
+  text-decoration: none;
+}
