@@ -13,6 +13,7 @@ import {
   selectTitleFilter,
 } from "../../redux/slices/filterSlice";
 import "./BookList.scss";
+import { selectUser } from "../../redux/slices/userSlice";
 
 const BookList = () => {
   const dispatch = useDispatch();
@@ -20,6 +21,7 @@ const BookList = () => {
   const titleFilter = useSelector(selectTitleFilter);
   const authorFilter = useSelector(selectAuthorFilter);
   const favoriteFilter = useSelector(selectFavoriteFilter);
+  const userName = useSelector(selectUser);
 
   //удаление книги
   const handleDelete = (id) => {
@@ -67,7 +69,7 @@ const BookList = () => {
 
   return (
     <div className="app-block book-list">
-      <h2>Book List</h2>
+      <h2>{`Book List by ${userName}`}</h2>
       {filtredBooks.length === 0 ? (
         <p>No books available</p>
       ) : (
