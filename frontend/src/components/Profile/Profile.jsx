@@ -1,6 +1,6 @@
 import { useDispatch, useSelector } from "react-redux";
 import { selectUser, setUserName } from "../../redux/slices/userSlice";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import "./Profile.scss";
 
 const Profile = () => {
@@ -21,7 +21,9 @@ const Profile = () => {
   };
   return (
     <div className="app-block user-form">
-      <h3>{`Имя пользователя: ${user}`}</h3>
+      <label>
+        Имя пользователя: <h3>{user}</h3>{" "}
+      </label>
       <form onSubmit={handleSubmit}>
         <input type="text" value={name} onChange={handleChange} />
         <button type="submit">Изменить имя</button>
