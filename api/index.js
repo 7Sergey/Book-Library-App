@@ -8,6 +8,7 @@ const Book = require('./models/Book');
 
 const app = express();
 app.use(cors());
+app.use(express.json());
 
 const getRandomBook = (books) => {
   const randomIndex = Math.floor(Math.random() * books.length);
@@ -23,6 +24,17 @@ app.get('/books/random', async (req, res) => {
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: 'Ошибка получения книги' });
+  }
+});
+// Маршрут для добавления книги
+// Create a new book
+app.post('/books', async (req, res) => {
+  const book = new Book(req.body);
+  try {
+    await book.save();
+    res.status(201).send(book);
+  } catch (err) {
+    res.status(400).send(err);
   }
 });
 

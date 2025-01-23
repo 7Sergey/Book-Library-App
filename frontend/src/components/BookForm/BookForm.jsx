@@ -5,6 +5,7 @@ import { FaSpinner } from "react-icons/fa";
 // локальные импорты
 import {
   addBook,
+  addBookApi,
   fetchBook,
   selectIsLoadingViaAPI,
 } from "../../redux/slices/booksSlice";
@@ -15,6 +16,8 @@ import { setError } from "../../redux/slices/errorSlice";
 const BookForm = () => {
   const [title, setTitle] = useState("");
   const [author, setAuthor] = useState("");
+  const [year, setYear] = useState("");
+
   const isLoadingViaAPI = useSelector(selectIsLoadingViaAPI);
   const dispatch = useDispatch();
 
@@ -27,14 +30,17 @@ const BookForm = () => {
           //передаем в функцию объект с двумя свойствами
           title: title,
           author: author,
-        }
-        // "manual" //Источник создания книги
+          year: year,
+        },
+        "manual" //Источник создания книги
       );
-
+      dispatch(addBookApi({ url: "http://localhost:4000/books", book })); // Отправили в базу данных
+      // И добавили в состояние
       dispatch(addBook(book)); // вызвав addBook мы получим объект с type и peyload. И этот объект передаем в dispatch
 
       setAuthor("");
       setTitle("");
+      setYear("");
     } else {
       dispatch(setError("Проверьте поля ввода"));
     }
@@ -66,7 +72,16 @@ const BookForm = () => {
             onChange={(e) => setAuthor(e.target.value)}
           />
         </div>
-        <button type="submit">Add Book</button>
+        <div>
+          <label htmlFor="year">Year:</label>
+          <input
+            type="number"
+            id="year"
+            value={year}
+            onChange={(e) => setYear(e.target.value)}
+          />
+        </div>
+        <button type="submit">Send Book to DB</button>
 
         <button
           type="button"

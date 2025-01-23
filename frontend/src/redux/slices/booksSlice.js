@@ -22,13 +22,20 @@ export const fetchBook = createAsyncThunk(
       // 2 option
       throw error;
       // всё равно нужно выкинуть ошибку дальше, чтобы промис был отклонен(rejected)
+    }
+  }
+);
 
-      // thunkAPI - объект, передаваемый в асинхронные thunk-функции в Redux Toolkit.
-      // Он предоставляет доступ к вспомогательным методам, таким как dispatch, getState и rejectWithValue.
-      // Пример использования:
-      // - dispatch: позволяет отправлять другие действия из thunk.
-      // - getState: предоставляет доступ к текущему состоянию хранилища.
-      // - rejectWithValue: используется для возврата пользовательских ошибок при отклонении промиса.
+// добавление книги
+export const addBookApi = createAsyncThunk(
+  'books/addBook',
+  async ({ url, book }, thunkAPI) => {
+    try {
+      const res = await axios.post(url, book); // Передаем URL и объект книги отдельно
+      return res.data; // Возврат данных с сервера
+    } catch (error) {
+      thunkAPI.dispatch(setError(error.message)); // Обработка ошибки
+      throw error; // Отклонение промиса
     }
   }
 );
