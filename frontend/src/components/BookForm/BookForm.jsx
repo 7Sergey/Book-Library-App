@@ -27,8 +27,8 @@ const BookForm = () => {
           //передаем в функцию объект с двумя свойствами
           title: title,
           author: author,
-        },
-        "manual" //Источник создания книги
+        }
+        // "manual" //Источник создания книги
       );
 
       dispatch(addBook(book)); // вызвав addBook мы получим объект с type и peyload. И этот объект передаем в dispatch
