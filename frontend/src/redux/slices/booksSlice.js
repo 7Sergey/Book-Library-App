@@ -8,30 +8,27 @@ const initialState = {
   isLoadingViaAPI: false,
 };
 
-// создаем асинхронную функцию -- гет запрос на сервер с action под названием books/fetchBook
-export const fetchBook = createAsyncThunk(
-  'books/fetchBook',
-  async (url, thunkAPI) => {
-    try {
-      const res = await axios.get(url);
-      return res.data; // возврат данных с сервера
-    } catch (error) {
-      thunkAPI.dispatch(setError(error.message));
-      // 1 option, перенаправляем в reject(отклоняем промисс)
-      // return thunkAPI.rejectWithValue(error);
-      // 2 option
-      throw error;
-      // всё равно нужно выкинуть ошибку дальше, чтобы промис был отклонен(rejected)
+// создаем асинхронную функцию -- гет запрос на сервер с action под названием books/random
+export const fetchBook = createAsyncThunk('books', async (url, thunkAPI) => {
+  try {
+    const res = await axios.get(url);
+    return res.data; // возврат данных с сервера
+  } catch (error) {
+    thunkAPI.dispatch(setError(error.message));
+    // 1 option, перенаправляем в reject(отклоняем промисс)
+    // return thunkAPI.rejectWithValue(error);
+    // 2 option
+    throw error;
+    // всё равно нужно выкинуть ошибку дальше, чтобы промис был отклонен(rejected)
 
-      // thunkAPI - объект, передаваемый в асинхронные thunk-функции в Redux Toolkit.
-      // Он предоставляет доступ к вспомогательным методам, таким как dispatch, getState и rejectWithValue.
-      // Пример использования:
-      // - dispatch: позволяет отправлять другие действия из thunk.
-      // - getState: предоставляет доступ к текущему состоянию хранилища.
-      // - rejectWithValue: используется для возврата пользовательских ошибок при отклонении промиса.
-    }
+    // thunkAPI - объект, передаваемый в асинхронные thunk-функции в Redux Toolkit.
+    // Он предоставляет доступ к вспомогательным методам, таким как dispatch, getState и rejectWithValue.
+    // Пример использования:
+    // - dispatch: позволяет отправлять другие действия из thunk.
+    // - getState: предоставляет доступ к текущему состоянию хранилища.
+    // - rejectWithValue: используется для возврата пользовательских ошибок при отклонении промиса.
   }
-);
+});
 
 const booksSlice = createSlice({
   name: 'books',

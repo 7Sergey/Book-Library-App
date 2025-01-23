@@ -9,21 +9,11 @@ const Book = require('./models/Book');
 const app = express();
 app.use(cors());
 
-const getRandomBook = (booksData) => {
-  const randomIndex = Math.floor(Math.random() * booksData.length);
-  const randomBook = booksData[randomIndex];
+const getRandomBook = (books) => {
+  const randomIndex = Math.floor(Math.random() * books.length);
+  const randomBook = books[randomIndex];
   return randomBook;
 };
-
-app.get('/random-book', (req, res) => {
-  res.json(getRandomBook());
-});
-
-app.get('/random-book-delayed', (req, res) => {
-  setTimeout(() => {
-    res.json(getRandomBook());
-  }, 2000);
-});
 
 // Маршрут для получения всех книг
 app.get('/books', async (req, res) => {
