@@ -15,15 +15,14 @@ const getRandomBook = (books) => {
   return randomBook;
 };
 
-// Маршрут для получения всех книг
-app.get('/books', async (req, res) => {
+// Маршрут для получения рандомной книги
+app.get('/books/random', async (req, res) => {
   try {
     const books = await Book.find(); // Получаем все книги из базы данных
-    res.json(getRandomBook(books));
-    console.log(getRandomBook(books));
+    res.json(getRandomBook(books)); // рандомную книгу получаем
   } catch (error) {
     console.error(error);
-    res.status(500).json({ message: 'Ошибка получения книг' });
+    res.status(500).json({ message: 'Ошибка получения книги' });
   }
 });
 
