@@ -1,9 +1,8 @@
 // внешние импорты
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { FaSpinner } from "react-icons/fa";
 // локальные импорты
-import booksData from "../../data/books.json";
 import {
   addBook,
   fetchBook,
@@ -14,14 +13,33 @@ import createBookWithId from "../../utils/createBookWithId";
 import { setError } from "../../redux/slices/errorSlice";
 
 const BookForm = () => {
+  const [booksFromMongo, setBooksFromMongo] = useState([]);
+
+  useEffect(() => {
+    const fetchBooks = async () => {
+      try {
+        const response = await fetch("http://localhost:4000/books");
+        if (!response.ok) throw new Error("Ошибка загрузки книг");
+        const data = await response.json();
+        setBooksFromMongo(data);
+        console.log(data);
+      } catch (err) {
+        console.error(err);
+        err.message;
+      }
+    };
+
+    fetchBooks();
+  }, []); // Пустой массив зависимостей - загрузка только при монтировании компонента
+
   const [title, setTitle] = useState("");
   const [author, setAuthor] = useState("");
   const isLoadingViaAPI = useSelector(selectIsLoadingViaAPI);
   const dispatch = useDispatch();
 
   const handleAddRandomBook = () => {
-    const randomIndex = Math.floor(Math.random() * booksData.length);
-    const randomBook = booksData[randomIndex];
+    const randomIndex = Math.floor(Math.random() * booksFromMongo.length);
+    const randomBook = booksFromMongo[randomIndex];
 
     dispatch(addBook(createBookWithId(randomBook, "random")));
   };

@@ -40,7 +40,7 @@ const BookList = () => {
       .toLowerCase()
       .includes(titleFilter.toLowerCase());
 
-    //Преобразовал к нижнему регистру название книги, сравнил её с фильтром по автору.
+    //Преобразовал к нижнему регистру автора книги, сравнил её с фильтром по автору.
     const matchesAuthor = book.author
       .toLowerCase()
       .includes(authorFilter.toLowerCase());
