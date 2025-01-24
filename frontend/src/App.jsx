@@ -11,7 +11,7 @@ function App() {
       <Routes>
         <Route path="/" element={<MainLayout />}>
           <Route index element={<Library />} />
-          <Route path="profile" element={<Profile />} />
+          <Route path="/profile" element={<Profile />} />
 
           <Route path="*" element={<NotFound />} />
         </Route>
