@@ -32,7 +32,6 @@ mongoose
   .connect(mongoURL, { useNewUrlParser: true, useUnifiedTopology: true })
   .then(() => console.log('Успешное подключение к MongoDB'))
   .catch((error) => console.error('Ошибка подключения к MongoDB:', error));
-
 const port = process.env.PORT || 4000;
 app.listen(port, () => {
   console.log(`Сервер запущен на ${port} порту`);
