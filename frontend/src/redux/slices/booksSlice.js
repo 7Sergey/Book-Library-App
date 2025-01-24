@@ -7,7 +7,6 @@ const initialState = {
   books: [],
   isLoadingViaAPI: false,
 };
-
 // создаем асинхронную функцию -- гет запрос на сервер с action под названием books/random
 export const fetchBook = createAsyncThunk(
   'books/fetchBook',
