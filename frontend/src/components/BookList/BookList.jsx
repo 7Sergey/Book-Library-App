@@ -75,7 +75,7 @@ const BookList = () => {
       ) : (
         <ul>
           {filtredBooks.map((book, i) => (
-            <li key={book.id}>
+            <li key={book.id || book._id || i}>
               <div className="book-info">
                 {++i}. {highlightMatch(book.title, titleFilter)} by{" "}
                 <strong>{highlightMatch(book.author, authorFilter)}</strong> (
