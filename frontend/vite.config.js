@@ -5,8 +5,10 @@ import react from '@vitejs/plugin-react';
 export default defineConfig({
   plugins: [react()],
   build: {
+    // Уберите `external`, если хотите, чтобы зависимость была частью сборки
     rollupOptions: {
-      external: ['react-redux'], // Указываем react-redux как внешнюю зависимость
+      // Убедитесь, что `react-redux` не указан как внешняя зависимость
+      // external: ['react-redux'],
     },
   },
 });
