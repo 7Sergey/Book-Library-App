@@ -37,6 +37,10 @@ app.post('/books', async (req, res) => {
     res.status(400).send(err);
   }
 });
+app.use((err, req, res, next) => {
+  console.error(err.stack);
+  res.status(500).send('Что-то пошло не так!');
+});
 
 // Подключение к MongoDB
 const mongoURL = process.env.MONGO_URL;
@@ -44,7 +48,7 @@ mongoose
   .connect(mongoURL, { useNewUrlParser: true, useUnifiedTopology: true })
   .then(() => console.log('Успешное подключение к MongoDB'))
   .catch((error) => console.error('Ошибка подключения к MongoDB:', error));
-const port = process.env.PORT || 4000;
+const port = process.env.PORT || 3000;
 app.listen(port, () => {
   console.log(`Сервер запущен на ${port} порту`);
 });

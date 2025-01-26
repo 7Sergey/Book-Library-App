@@ -34,7 +34,7 @@ const BookForm = () => {
         },
         "manual" //Источник создания книги
       );
-      dispatch(addBookApi({ url: "http://localhost:4000/books", book })); // Отправили в базу данных
+      dispatch(addBookApi({ url: "http://localhost:3000/books", book })); // Отправили в базу данных
       // И добавили в состояние
       dispatch(addBook(book)); // вызвав addBook мы получим объект с type и peyload. И этот объект передаем в dispatch
 
@@ -47,7 +47,7 @@ const BookForm = () => {
   };
 
   const handleAddRandomBookViaAPI = async () => {
-    dispatch(fetchBook("http://localhost:4000/books/random"));
+    dispatch(fetchBook("http://localhost:3000/books/random"));
   };
 
   return (
