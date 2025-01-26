@@ -41,6 +41,10 @@ app.use((err, req, res, next) => {
   console.error(err.stack);
   res.status(500).send('Что-то пошло не так!');
 });
+//тест
+app.get('/health', (req, res) => {
+  res.status(200).json({ message: 'API is working!' });
+});
 
 // Подключение к MongoDB
 const mongoURL = process.env.MONGO_URL;
@@ -52,3 +56,5 @@ const port = process.env.PORT || 3000;
 app.listen(port, () => {
   console.log(`Сервер запущен на ${port} порту`);
 });
+
+export default app;
