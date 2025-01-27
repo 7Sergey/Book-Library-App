@@ -5,7 +5,7 @@ import Library from "./components/Library/Library";
 import NotFound from "./components/NotFound.jsx/NotFound";
 import Profile from "./components/Profile/Profile";
 
-function App() {
+export function App() {
   return (
     <div className="app">
       <Routes>
@@ -19,5 +19,3 @@ function App() {
     </div>
   );
 }
-
-export default App;
