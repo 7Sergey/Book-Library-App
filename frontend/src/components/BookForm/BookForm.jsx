@@ -37,7 +37,6 @@ const BookForm = () => {
       dispatch(addBookApi({ url: "http://localhost:3000/books", book })); // Отправили в базу данных
       // И добавили в состояние
       dispatch(addBook(book)); // вызвав addBook мы получим объект с type и peyload. И этот объект передаем в dispatch
-
       setAuthor("");
       setTitle("");
       setYear("");
