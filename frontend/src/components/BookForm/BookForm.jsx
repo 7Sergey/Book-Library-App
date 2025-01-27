@@ -35,7 +35,10 @@ const BookForm = () => {
         "manual" //Источник создания книги
       );
       dispatch(
-        addBookApi({ url: "https://mern-digital-theta.vercel.app/books", book })
+        addBookApi({
+          url: "https://book-library-app-api.vercel.app/books",
+          book,
+        })
       ); // Отправили в базу данных
       // И добавили в состояние
       dispatch(addBook(book)); // вызвав addBook мы получим объект с type и peyload. И этот объект передаем в dispatch
@@ -48,7 +51,7 @@ const BookForm = () => {
   };
 
   const handleAddRandomBookViaAPI = async () => {
-    dispatch(fetchBook("https://mern-digital-theta.vercel.app/books/random"));
+    dispatch(fetchBook("https://book-library-app-api.vercel.app/books/random"));
   };
 
   return (
