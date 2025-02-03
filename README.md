@@ -5,6 +5,8 @@ Book-Library-App — это приложение для управления б�
 [Посмотреть проект в действии](https://book-library-app-azure.vercel.app/)
 
 
+## [Версия на TypeScript](https://github.com/7Sergey/Book-Library-App-TypeScript)
+
 ## Возможности
 
 - **Добавление книг**:
